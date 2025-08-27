@@ -142,11 +142,43 @@ preparing me for the career path I know!
 ---
 
 
-## 🖥️ Tech Stack
+# 🖥️ Tech Stack
+## ​​ Languages
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=html,css,js,java,python,markdown,bootstrap,tailwind,nodejs,nextjs" /><br>
-  <img src="https://skillicons.dev/icons?i=firebase,appwrite,mysql,supabase,vercel,render,docker,github,gitlab,gcp,cisco" /><br>
-  <img src="https://skillicons.dev/icons?i=figma,canva,notion,numpy,pandas,plotly,matlab" />
+  <img src="https://skillicons.dev/icons?i=html,css,js,java,python,markdown" /><br>
+</p>
+
+## ​​ Frameworks & Libraries
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=bootstrap,tailwind,nodejs,nextjs" /><br>
+  <!-- Fallback: Plotly (Simple Icons) -->
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/plotly.svg" width="40" height="40" title="Plotly"/>
+  <!-- Fallback: MATLAB (Devicon) -->
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matlab/matlab-original.svg" width="40" height="40" title="MATLAB"/>
+</p>
+
+## ​​ Databases & Backend
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=firebase,mysql,supabase" /><br>
+  <!-- Fallback: Appwrite (Devicon or CDN) -->
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/appwrite/appwrite-original.svg" width="40" height="40" title="Appwrite"/>
+</p>
+
+## ​​ Cloud & Deployment
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=vercel,docker,gcp" /><br>
+  <!-- Fallback: Cisco logo via Simple Icons -->
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/cisco.svg" width="40" height="40" title="Cisco"/>
+  <!-- Fallback: Render logo via suitable SVG CDN -->
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/render.svg" width="40" height="40" title="Render"/>
+</p>
+
+## ​​ Tools & Productivity
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=github,gitlab" /><br>
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg" width="40" height="40" title="Figma"/>
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/canva.svg" width="40" height="40" title="Canva"/>
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/notion.svg" width="40" height="40" title="Notion"/>
 </p>
 
 ---
