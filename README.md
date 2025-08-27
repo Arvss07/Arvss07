@@ -47,31 +47,31 @@ and a 4th-year BS Information Technology enthusiast at <i>University of Saint Lo
 <blockquote align="center">
 
   
-  📍 I'm your go-to tech guru with skills that shine,  
+I'm your go-to tech guru with skills that shine,  
 mastering systems and security by design!  
 From network troubleshooting to code so clean,  
 I build solutions for problems unforeseen.
 
   
-💻 With Python and Java as my trusty allies,  
+With Python and Java as my trusty allies,  
 plus cutting-edge tools that never compromise!  
 My specialty? Hunting down bugs with style and grace,  
 solving network puzzles at lightning-fast pace.  
 
 
-🔥 I don't just fix what's broken and torn,  
+I don't just fix what's broken and torn,  
 I craft elegant solutions from dusk until dawn.  
 Through CTF battles where hackers compete,  
 I sharpen my skills and make learning complete. 
 
 
-⚡ Fueled by curiosity that burns so bright,  
+Fueled by curiosity that burns so bright,  
 I'm building my path as a cybersecurity knight!  
 Whether Network Admin or Security Engineer,  
 I'll guard the digital realms with passion sincere.
 
 
-📖 I stay sharp by learning trends new and old,  
+I stay sharp by learning trends new and old,  
 mastering networks with stories untold.  
 Every challenge I face makes my expertise grow,  
 preparing me for the career path I know!  
@@ -131,7 +131,7 @@ preparing me for the career path I know!
 
 ---
 
-## 🌐 Connect With Me
+## Connect With Me
 <p align="center">
   <a href="https://facebook.com/Arvss07"><img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white"></a>
   <a href="https://linkedin.com/in/arvy-aggabao-1636ab31b"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a>
@@ -142,7 +142,7 @@ preparing me for the career path I know!
 ---
 
 
-# 🖥️ Tech Stack
+# Tech Stack
 ## ​​ Languages
 <p align="center">
   <img src="https://skillicons.dev/icons?i=html,css,js,java,python,markdown" /><br>
@@ -183,7 +183,7 @@ preparing me for the career path I know!
 
 ---
 
-## 📊 GitHub Analytics
+## GitHub Analytics
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=Arvss07&theme=radical&show_icons=true&count_private=true" height="160"/>
   <img src="https://nirzak-streak-stats.vercel.app?user=Arvss07&theme=radical&hide_border=false" height="160"/>
@@ -199,7 +199,7 @@ preparing me for the career path I know!
 
 ---
 
-## ✍️ Random Dev Quote
+## Random Dev Quote
 <p align="center">
   <img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=radical"/>
 </p>
@@ -208,5 +208,5 @@ preparing me for the career path I know!
 
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&pause=1000&color=F75C7E&center=true&vCenter=true&width=600&lines=⭐+Don't+forget+to+star+my+repos!;💼+Let's+build+something+amazing+together!;🌟+Follow+for+more+awesome+projects!;🚀+Always+ready+for+new+challenges!" alt="Footer Animation" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&height=300&color=gradient&text=Let's%20build%20something%20amazing%20together,%20I'm%20always%20ready%20for%20new%20challenges!&descAlign=6&fontSize=24&animation=twinkling&section=footer&fontAlignY=71" alt="Wave Footer"/>
 </p>
