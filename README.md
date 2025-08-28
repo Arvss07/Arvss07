@@ -12,6 +12,12 @@
   <img src="https://img.shields.io/badge/Vibe-Coding%20Mode%20ON-ff69b4?style=for-the-badge&logo=fire&logoColor=white&labelColor=black"/>
 </p>
 
+
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Arvss07/Arvss07/output/snake.svg" alt="Snake animation" />
+</p>
+
 ---
 
 <h1 align="center">💫 About Me</h1>
