@@ -214,5 +214,5 @@ preparing me for the career path I know!
 
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=300&color=gradient&text=Let's%20build%20something%20amazing%20together,%20I'm%20always%20ready%20for%20new%20challenges!&descAlign=6&fontSize=24&animation=twinkling&section=footer&fontAlignY=71" alt="Wave Footer"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&height=300&color=gradient&text=Let's%20build%20something%20amazing%20together,%20I'm%20always%20ready%20for%20new%20challenges!&descAlign=6&fontSize=20&animation=twinkling&section=footer&fontAlignY=71" alt="Wave Footer"/>
 </p>
