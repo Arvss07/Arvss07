@@ -45,48 +45,6 @@ and a 4th-year BS Information Technology enthusiast at <i>University of Saint Lo
 ---
 
 
-<!-- Original Poem Section -->
-<p align="center">
-📝 <i>A glimpse into my journey...</i>
-</p>
-
-<blockquote align="center">
-
-  
-I'm your go-to tech guru with skills that shine,  
-mastering systems and security by design!  
-From network troubleshooting to code so clean,  
-I build solutions for problems unforeseen.
-
-  
-With Python and Java as my trusty allies,  
-plus cutting-edge tools that never compromise!  
-My specialty? Hunting down bugs with style and grace,  
-solving network puzzles at lightning-fast pace.  
-
-
-I don't just fix what's broken and torn,  
-I craft elegant solutions from dusk until dawn.  
-Through CTF battles where hackers compete,  
-I sharpen my skills and make learning complete. 
-
-
-Fueled by curiosity that burns so bright,  
-I'm building my path as a cybersecurity knight!  
-Whether Network Admin or Security Engineer,  
-I'll guard the digital realms with passion sincere.
-
-
-I stay sharp by learning trends new and old,  
-mastering networks with stories untold.  
-Every challenge I face makes my expertise grow,  
-preparing me for the career path I know!  
-</blockquote>
-
-
----
-
-
 <!-- Skills Rotation Animation -->
 <p align="center">
   <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Anonymous+Pro&weight=500&duration=1000&pause=300&color=F77252&center=true&vCenter=true&random=true&width=435&lines=Specializing+in+Network+Security;Mastering+Ethical+Hacking;Building+Security+Solutions;Exploring+Cloud+Architecture;Passionate+about+Innovation" alt="Typing SVG" /></a>
@@ -147,7 +105,6 @@ preparing me for the career path I know!
 
 ---
 
-
 # Tech Stack
 ## ​​ Languages
 <p align="center">
@@ -159,8 +116,6 @@ preparing me for the career path I know!
   <img src="https://skillicons.dev/icons?i=bootstrap,tailwind,nodejs,nextjs" /><br>
   <!-- Fallback: Plotly (Simple Icons) -->
   <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/plotly.svg" width="40" height="40" title="Plotly"/>
-  <!-- Fallback: MATLAB (Devicon) -->
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matlab/matlab-original.svg" width="40" height="40" title="MATLAB"/>
 </p>
 
 ## ​​ Databases & Backend
