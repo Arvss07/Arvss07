@@ -2,7 +2,7 @@
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Welcome%20to%20My%20Github%20Profile!&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=30"/>
 
 <p align="center">
-<a href="https://git.io/typing-svg" ><img  src="https://readme-typing-svg.demolab.com?font=Anonymous+Pro&weight=500&duration=1000&pause=300&color=29B6F7&center=true&vCenter=true&random=true&width=435&lines=Arvss+Github;Cybersecurity+in+the+making;Network+Administrator;Tech+Explorer;Always+Learning;Always+Building" alt="Typing SVG" /></a>
+<a href="https://git.io/typing-svg" ><img  src="https://readme-typing-svg.demolab.com?font=Anonymous+Pro&weight=500&duration=1000&pause=300&color=29B6F7&center=true&vCenter=true&random=true&width=435&lines=Arvss+Github;Cybersecurity+Analyst+in+the+making;Network+Security+Engineer;Tech+Explorer;Always+Learning;Always+Building" alt="Typing SVG" /></a>
 </p>
 
 
@@ -25,7 +25,7 @@
 🎉 Hey there, I'm Arvy!  
 </p>
 <p align="center">
-An aspiring <b>Cybersecurity Engineer</b> & <b>Network Administrator</b>,  
+An aspiring <b>Cybersecurity Analyst</b>,  
 and a 4th-year BS Information Technology enthusiast at <i>University of Saint Louis Tuguegarao</i>.
 </p>
 
