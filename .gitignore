@@ -1,0 +1,8 @@
+# Local workspace artifacts (kept local per project preferences)
+.agents/
+scripts/
+data/
+DESIGN.md
+PRODUCT.md
+.impeccable/
+node_modules/

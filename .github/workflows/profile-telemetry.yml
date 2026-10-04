@@ -1,0 +1,400 @@
+name: Profile Telemetry Daily Refresh
+
+on:
+  schedule:
+    # Runs daily at 00:00 UTC (replaces old snake.yml cron)
+    - cron: "0 0 * * *"
+  workflow_dispatch: # Allows manual trigger from Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  telemetry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Refresh Save Data & Commit Terrain
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node - << 'EOF'
+          import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
+          import { join } from 'node:path';
+
+          const login = 'Arvss07';
+          const token = process.env.GITHUB_TOKEN;
+          const headers = { 'User-Agent': `${login}-profile`, Accept: 'application/vnd.github+json' };
+          if (token) headers.Authorization = `bearer ${token}`;
+
+          const INK = {
+            light: { paper: '#FCFCFC', ink: '#000000', blue: '#0058F8', red: '#F83800', tint: '#A8C4FC' },
+            dark: { paper: '#000000', ink: '#FCFCFC', blue: '#3C8CFC', red: '#F83800', tint: '#0B2B6B' },
+          };
+          const FIXED = { black: '#000000', white: '#FCFCFC', blue: '#0058F8', red: '#F83800', navy: '#0B2B6B' };
+
+          const G = {
+            A: ['.###.', '#...#', '#...#', '#####', '#...#', '#...#', '#...#'],
+            B: ['####.', '#...#', '#...#', '####.', '#...#', '#...#', '####.'],
+            C: ['.###.', '#...#', '#....', '#....', '#....', '#...#', '.###.'],
+            D: ['####.', '#...#', '#...#', '#...#', '#...#', '#...#', '####.'],
+            E: ['#####', '#....', '#....', '####.', '#....', '#....', '#####'],
+            F: ['#####', '#....', '#....', '####.', '#....', '#....', '#....'],
+            G: ['.###.', '#...#', '#....', '#.###', '#...#', '#...#', '.####'],
+            H: ['#...#', '#...#', '#...#', '#####', '#...#', '#...#', '#...#'],
+            I: ['.###.', '..#..', '..#..', '..#..', '..#..', '..#..', '.###.'],
+            J: ['..###', '...#.', '...#.', '...#.', '...#.', '#..#.', '.##..'],
+            K: ['#...#', '#..#.', '#.#..', '##...', '#.#..', '#..#.', '#...#'],
+            L: ['#....', '#....', '#....', '#....', '#....', '#....', '#####'],
+            M: ['#...#', '##.##', '#.#.#', '#.#.#', '#...#', '#...#', '#...#'],
+            N: ['#...#', '#...#', '##..#', '#.#.#', '#..##', '#...#', '#...#'],
+            O: ['.###.', '#...#', '#...#', '#...#', '#...#', '#...#', '.###.'],
+            P: ['####.', '#...#', '#...#', '####.', '#....', '#....', '#....'],
+            Q: ['.###.', '#...#', '#...#', '#...#', '#.#.#', '#..#.', '.##.#'],
+            R: ['####.', '#...#', '#...#', '####.', '#.#..', '#..#.', '#...#'],
+            S: ['.####', '#....', '#....', '.###.', '....#', '....#', '####.'],
+            T: ['#####', '..#..', '..#..', '..#..', '..#..', '..#..', '..#..'],
+            U: ['#...#', '#...#', '#...#', '#...#', '#...#', '#...#', '.###.'],
+            V: ['#...#', '#...#', '#...#', '#...#', '#...#', '.#.#.', '..#..'],
+            W: ['#...#', '#...#', '#...#', '#.#.#', '#.#.#', '#.#.#', '.#.#.'],
+            X: ['#...#', '#...#', '.#.#.', '..#..', '.#.#.', '#...#', '#...#'],
+            Y: ['#...#', '#...#', '.#.#.', '..#..', '..#..', '..#..', '..#..'],
+            Z: ['#####', '....#', '...#.', '..#..', '.#...', '#....', '#####'],
+            0: ['.###.', '#...#', '#..##', '#.#.#', '##..#', '#...#', '.###.'],
+            1: ['..#..', '.##..', '..#..', '..#..', '..#..', '..#..', '.###.'],
+            2: ['.###.', '#...#', '....#', '...#.', '..#..', '.#...', '#####'],
+            3: ['#####', '...#.', '..#..', '...#.', '....#', '#...#', '.###.'],
+            4: ['...#.', '..##.', '.#.#.', '#..#.', '#####', '...#.', '...#.'],
+            5: ['#####', '#....', '####.', '....#', '....#', '#...#', '.###.'],
+            6: ['..##.', '.#...', '#....', '####.', '#...#', '#...#', '.###.'],
+            7: ['#####', '....#', '...#.', '..#..', '.#...', '.#...', '.#...'],
+            8: ['.###.', '#...#', '#...#', '.###.', '#...#', '#...#', '.###.'],
+            9: ['.###.', '#...#', '#...#', '.####', '....#', '...#.', '.##..'],
+            ' ': ['.....', '.....', '.....', '.....', '.....', '.....', '.....'],
+            '.': ['.....', '.....', '.....', '.....', '.....', '.##..', '.##..'],
+            ':': ['.....', '.##..', '.##..', '.....', '.##..', '.##..', '.....'],
+            '/': ['....#', '...#.', '...#.', '..#..', '.#...', '.#...', '#....'],
+            '-': ['.....', '.....', '.....', '#####', '.....', '.....', '.....'],
+            '+': ['.....', '..#..', '..#..', '#####', '..#..', '..#..', '.....'],
+            '%': ['##..#', '##.#.', '..#..', '.#...', '.#..#', '#.##.', '#..##'],
+            ',': ['.....', '.....', '.....', '.....', '..##.', '..##.', '.##..'],
+            "'": ['..##.', '..##.', '...#.', '.....', '.....', '.....', '.....'],
+            '!': ['..#..', '..#..', '..#..', '..#..', '.....', '..#..', '..#..'],
+            '?': ['.###.', '#...#', '....#', '...#.', '..#..', '.....', '..#..'],
+            '[': ['..###', '..#..', '..#..', '..#..', '..#..', '..#..', '..###'],
+            ']': ['###..', '..#..', '..#..', '..#..', '..#..', '..#..', '###..'],
+            '#': ['..#..', '#####', '..#..', '#####', '..#..', '.....', '.....'],
+            '*': ['#.#.#', '.###.', '#####', '.###.', '#.#.#', '.....', '.....'],
+          };
+
+          function textRuns(str, scale = 1, ox = 0, oy = 0) {
+            const segs = [];
+            const chars = String(str).toUpperCase().split('');
+            let cx = ox;
+            for (const ch of chars) {
+              const grid = G[ch] || G['?'];
+              grid.forEach((row, r) => {
+                let start = -1;
+                for (let c = 0; c <= row.length; c++) {
+                  const on = c < row.length && row[c] === '#';
+                  if (on && start === -1) start = c;
+                  else if (!on && start !== -1) {
+                    segs.push(`M${cx + start * scale} ${oy + r * scale}h${(c - start) * scale}v${scale}h${-(c - start) * scale}z`);
+                    start = -1;
+                  }
+                }
+              });
+              cx += 6 * scale;
+            }
+            return segs.join('');
+          }
+
+          function textWidth(str, scale = 1) {
+            return String(str).length * 6 * scale;
+          }
+
+          function renderText(str, scale, ox, oy, color, opts = {}) {
+            let x = ox;
+            if (opts.align === 'end') x = ox - textWidth(str, scale);
+            else if (opts.align === 'middle') x = ox - Math.round(textWidth(str, scale) / 2);
+            const d = textRuns(str, scale, x, oy);
+            return d ? `<path fill="${color}" d="${d}"/>` : '';
+          }
+
+          function nesFrame(w, h, theme, title, pageNum, totalPages = 5) {
+            const t = INK[theme];
+            let o = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" shape-rendering="crispEdges">`;
+            o += `<rect width="${w}" height="${h}" fill="${t.paper}"/>`;
+            o += `<rect x="12" y="12" width="${w - 24}" height="${h - 24}" fill="none" stroke="${t.ink}" stroke-width="4"/>`;
+            o += `<rect x="20" y="20" width="${w - 40}" height="${h - 40}" fill="none" stroke="${t.ink}" stroke-width="2"/>`;
+            const corners = [[16, 16], [w - 24, 16], [16, h - 24], [w - 24, h - 24]];
+            corners.forEach(([cx, cy]) => {
+              o += `<rect x="${cx}" y="${cy}" width="8" height="8" fill="${t.red}"/>`;
+            });
+            o += `<rect x="36" y="32" width="${w - 72}" height="32" fill="${t.blue}"/>`;
+            o += `<rect x="36" y="32" width="8" height="32" fill="${t.red}"/>`;
+            o += renderText('INSTRUCTION BOOKLET', 2, 54, 41, FIXED.white);
+            o += renderText('NES-AV-USA', 2, w - 50, 41, FIXED.white, { align: 'end' });
+            o += `<rect x="36" y="74" width="${w - 72}" height="42" fill="${t.tint}"/>`;
+            o += `<rect x="36" y="112" width="${w - 72}" height="4" fill="${t.ink}"/>`;
+            o += renderText(title, 4, 48, 83, t.ink);
+            const pageStr = `${String(pageNum).padStart(2, '0')}/${String(totalPages).padStart(2, '0')}`;
+            o += renderText(pageStr, 3, w - 50, 86, t.ink, { align: 'end' });
+            return o;
+          }
+
+          function rect(x, y, w, h, fill) {
+            return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}"/>`;
+          }
+
+          function frame(x, y, w, h, border, stroke) {
+            return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="${stroke}" stroke-width="${border}"/>`;
+          }
+
+          function dotted(x1, x2, y, fill) {
+            let p = '';
+            for (let x = x1; x < x2; x += 8) p += `M${x} ${y}h4v2h-4z`;
+            return `<path fill="${fill}" d="${p}"/>`;
+          }
+
+          function cells(x, y, count, filled, w = 14, h = 14, gap = 4, fg = '#F83800', bg = '#A8C4FC') {
+            let o = '';
+            for (let i = 0; i < count; i++) {
+              const cx = x + i * (w + gap);
+              o += `<rect x="${cx}" y="${y}" width="${w}" height="${h}" fill="${i < filled ? fg : bg}"/>`;
+            }
+            return o;
+          }
+
+          function savePage(theme, stats) {
+            const t = INK[theme];
+            let o = nesFrame(960, 440, theme, 'SAVE DATA', 4, 5);
+            const fmt = (v) => (v === null || v === undefined ? '--' : String(v));
+            const contrib = stats.contributions;
+            const lv = contrib == null ? null : 1 + Math.floor(Math.sqrt(contrib / 5));
+            const cur = lv == null ? 0 : 5 * (lv - 1) ** 2;
+            const nxt = lv == null ? 1 : 5 * lv ** 2;
+            const pct = lv == null ? 0 : (contrib - cur) / (nxt - cur);
+            o += renderText('FILE 1', 2, 40, 132, t.blue);
+            o += renderText(stats.login.toUpperCase(), 4, 40, 154, t.ink);
+            o += renderText('LV', 3, 40, 212, t.ink);
+            o += renderText(fmt(lv), 6, 96, 198, t.red);
+            o += cells(40, 254, 20, Math.round(pct * 20), 14, 14, 4, t.blue, t.tint);
+            o += renderText(lv == null ? 'NEXT LV --' : `NEXT LV  ${contrib} / ${nxt} EXP`, 2, 40, 276, t.ink);
+            const rows = [
+              ['CONTRIBUTIONS (1Y)', contrib],
+              ['PUBLIC REPOS', stats.repos],
+              ['STARS EARNED', stats.stars],
+              ['FOLLOWERS', stats.followers],
+              ['PLAYTIME (YEARS)', stats.years],
+            ];
+            rows.forEach(([k, v], i) => {
+              const y = 298 + i * 22;
+              o += renderText(k, 2, 40, y, t.ink);
+              o += renderText(fmt(v), 2, 440, y, t.ink, { align: 'end' });
+            });
+            o += rect(476, 132, 4, 268, t.ink);
+            o += renderText('SKILL TREE', 3, 508, 132, t.ink);
+            const langs = stats.languages.length ? stats.languages : [['NO DATA YET', 0]];
+            langs.slice(0, 5).forEach(([name, p], i) => {
+              const y = 170 + i * 44;
+              o += renderText(name, 2, 508, y, t.ink);
+              o += renderText(`${Math.round(p)}%`, 2, 916, y, t.ink, { align: 'end' });
+              o += cells(508, y + 20, 24, Math.max(p > 0 ? 1 : 0, Math.round((p / 100) * 24)), 12, 10, 5, t.red, t.tint);
+            });
+            o += renderText(`SAVED ${stats.savedAt} · GITHUB API`, 2, 508, 402, t.blue);
+            o += '</svg>';
+            return o;
+          }
+
+          function graphPage(theme, stats) {
+            const t = INK[theme];
+            let o = nesFrame(960, 360, theme, 'OVERWORLD RADAR', 5, 5);
+            const weeks = stats.weeks && stats.weeks.length === 52 ? stats.weeks : new Array(52).fill(0);
+            const totalCommits = stats.contributions || weeks.reduce((a, b) => a + b, 0);
+            const activeWeeks = weeks.filter((w) => w > 0).length;
+            const maxWeek = Math.max(1, ...weeks);
+
+            o += renderText('WORLD CHRONICLE', 2, 40, 130, t.blue);
+            o += renderText('RADAR SCAN: ACTIVE', 2, 920, 130, t.blue, { align: 'end' });
+            o += renderText('52-WEEK COMMIT TERRAIN', 2, 40, 152, t.ink);
+            o += renderText(`COMMITS: ${totalCommits}`, 2, 390, 152, t.ink);
+            o += renderText(`ACTIVE: ${activeWeeks}/52 WKS`, 2, 580, 152, t.blue);
+            o += renderText(`MAX: ${maxWeek}/WK`, 2, 790, 152, t.red);
+
+            const chartX = 40;
+            const chartY = 176;
+            const chartW = 880;
+            const chartH = 104;
+            const baseline = chartY + chartH;
+
+            o += frame(chartX - 6, chartY - 6, chartW + 12, chartH + 36, 2, t.ink);
+            for (let gy = chartY + 26; gy < baseline; gy += 26) {
+              o += dotted(chartX, chartX + chartW, gy, t.tint);
+            }
+            o += rect(chartX, baseline, chartW, 2, t.ink);
+
+            const colW = 12;
+            const gap = 5;
+            weeks.forEach((count, i) => {
+              const x = chartX + 4 + i * (colW + gap);
+              if (count === 0) {
+                o += rect(x + 2, baseline - 3, colW - 4, 2, t.tint);
+              } else {
+                const barH = Math.min(chartH - 8, Math.max(14, Math.round((count / Math.max(maxWeek, 4)) * (chartH - 14))));
+                const y = baseline - barH;
+                const isBoss = count >= 4;
+                const barFill = isBoss ? t.red : t.blue;
+
+                o += rect(x, y, colW, barH, barFill);
+                o += rect(x + 2, y + 2, colW - 4, 3, FIXED.white);
+                if (isBoss) {
+                  o += rect(x + 4, y - 6, 4, 4, t.red);
+                  o += rect(x + 5, y - 5, 2, 2, FIXED.white);
+                }
+              }
+            });
+
+            const months = stats.months || ['OCT', 'NOV', 'DEC', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP'];
+            months.forEach((m, idx) => {
+              const weekIdx = Math.round(idx * 4.33);
+              const mx = chartX + 4 + weekIdx * (colW + gap);
+              o += renderText(m, 2, mx, baseline + 12, t.blue);
+            });
+
+            o += renderText('KEY: [.] REST   [+] QUEST   [*] BOSS ENCOUNTER', 2, 40, 328, t.ink);
+            o += renderText('1 PLAYER', 2, 920, 328, t.red, { align: 'end' });
+            o += '</svg>';
+            return o;
+          }
+
+          async function main() {
+            let stats = {
+              login,
+              contributions: 70,
+              repos: 24,
+              stars: 2,
+              followers: 2,
+              years: 3,
+              languages: [
+                ['JAVA', 35],
+                ['JAVASCRIPT', 26],
+                ['HTML', 17],
+                ['PYTHON', 12],
+                ['C', 10],
+              ],
+              weeks: [
+                1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 4,
+                3, 2, 1, 2,
+              ],
+              months: ['OCT', 'NOV', 'DEC', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP'],
+              savedAt: new Date().toISOString().slice(0, 10),
+            };
+
+            const query = `query($login:String!){user(login:$login){
+              createdAt followers{totalCount}
+              contributionsCollection{
+                contributionCalendar{
+                  totalContributions
+                  weeks {
+                    contributionDays {
+                      contributionCount
+                    }
+                  }
+                }
+              }
+              repositories(ownerAffiliations:OWNER,isFork:false,privacy:PUBLIC,first:100){
+                totalCount
+                nodes{
+                  stargazerCount
+                  languages(first:10,orderBy:{field:SIZE,direction:DESC}){
+                    edges{size node{name}}
+                  }
+                }
+              }
+            }}`;
+
+            try {
+              const res = await fetch('https://api.github.com/graphql', {
+                method: 'POST',
+                headers,
+                body: JSON.stringify({ query, variables: { login } }),
+              });
+              if (res.ok) {
+                const j = await res.json();
+                const u = j.data?.user;
+                if (u) {
+                  const cc = u.contributionsCollection?.contributionCalendar;
+                  const repos = u.repositories?.nodes ?? [];
+                  const weights = {};
+                  let total = 0;
+                  for (const r of repos) {
+                    for (const e of r.languages?.edges ?? []) {
+                      weights[e.node.name] = (weights[e.node.name] ?? 0) + e.size;
+                      total += e.size;
+                    }
+                  }
+                  const filtered = Object.entries(weights).filter(([name]) => name.toUpperCase() !== 'CSS');
+                  const filteredTotal = filtered.reduce((a, [, v]) => a + v, 0);
+                  const languages = filtered
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([name, v]) => [name.toUpperCase(), Math.round((100 * v) / (filteredTotal || 1))])
+                    .filter(([, p]) => p >= 1)
+                    .slice(0, 5);
+
+                  const weeks = (cc.weeks ?? []).slice(-52).map((w) =>
+                    w.contributionDays.reduce((a, b) => a + b.contributionCount, 0)
+                  );
+
+                  stats = {
+                    login,
+                    contributions: cc.totalContributions ?? stats.contributions,
+                    repos: u.repositories.totalCount ?? stats.repos,
+                    stars: repos.reduce((a, r) => a + (r.stargazerCount || 0), 0),
+                    followers: u.followers?.totalCount ?? stats.followers,
+                    years: u.createdAt ? Math.floor((Date.now() - Date.parse(u.createdAt)) / 31557600000) : stats.years,
+                    languages: languages.length ? languages : stats.languages,
+                    weeks: weeks.length === 52 ? weeks : stats.weeks,
+                    months: stats.months,
+                    savedAt: new Date().toISOString().slice(0, 10),
+                  };
+                  console.log('GitHub GraphQL telemetry fetched successfully');
+                }
+              }
+            } catch (err) {
+              console.log('Could not reach GitHub API, using baseline:', err.message);
+            }
+
+            mkdirSync('dist', { recursive: true });
+            mkdirSync('assets', { recursive: true });
+
+            for (const theme of ['light', 'dark']) {
+              const saveSvg = savePage(theme, stats) + '\n';
+              const graphSvg = graphPage(theme, stats) + '\n';
+
+              writeFileSync(join('dist', `save-${theme}.svg`), saveSvg);
+              writeFileSync(join('dist', `graph-${theme}.svg`), graphSvg);
+              writeFileSync(join('assets', `save-${theme}.svg`), saveSvg);
+              writeFileSync(join('assets', `graph-${theme}.svg`), graphSvg);
+            }
+            console.log('Telemetry assets and dist refreshed successfully');
+          }
+
+          main();
+          EOF
+
+      - name: Commit and Push Updated Telemetry
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add dist/ assets/
+          git diff --staged --quiet || (git commit -m "chore(telemetry): refresh save data and commit terrain [skip ci]" && git push)
