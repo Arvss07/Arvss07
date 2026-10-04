@@ -61,6 +61,15 @@
 </picture>
 
 
+<!-- BONUS STAGE: PLAYABLE RETRO ARCADE -->
+<a href="https://arvss07.github.io/arcade/" target="_blank" title="Press Start: Play Cyber Defender Arcade Mini-Game in browser">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/arcade-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/arcade-light.svg">
+    <img alt="Bonus Stage: Cyber Defender Protocol Invaders Arcade Mini-Game. Click to insert coin and play in browser." src="assets/arcade-dark.svg" width="100%">
+  </picture>
+</a>
+
 <!-- CONTINUE SCREEN -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/continue.svg">
@@ -97,5 +106,9 @@
 - **Databases & Backend:** Firebase, MySQL, Supabase, Appwrite
 - **Cloud & Deployment:** Vercel, Docker, Cloudflare, Google Cloud Platform (GCP), Cisco, Render
 - **Productivity & Dev Tools:** GitHub, GitLab, Figma, Canva, Notion
+
+### 🕹️ Bonus Stage: Retro Arcade Mini-Game
+- **Game:** [Cyber Defender: Protocol Invaders](https://arvss07.github.io/arcade/)
+- **Mission:** Guard the firewall from DDoS floods and malicious packet bugs in an authentic 8-bit web canvas arcade!
 
 </details>
