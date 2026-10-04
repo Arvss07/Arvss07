@@ -7,15 +7,21 @@
 
 <div align="center">
 
-<!-- COVER -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/cover.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/cover.svg">
-  <img alt="ARVSS07 - A Cybersecurity Adventure. Instruction Booklet Cover." src="assets/cover.svg" width="100%">
-</picture>
+<!-- COVER: PRESS START TO PLAY ARCADE -->
+<a href="https://arvss07.github.io/Arvss07/" target="_blank" title="Press Start: Launch Cyber Defender Retro Arcade!">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/cover.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/cover.svg">
+    <img alt="ARVSS07 - A Cybersecurity Adventure. Click PRESS START to Launch Arcade." src="assets/cover.svg" width="100%">
+  </picture>
+</a>
 
-<!-- CONTROLLER ACTION BUTTONS (DIRECT CONTACT) -->
+<!-- CONTROLLER ACTION BUTTONS (ARCADE START & DIRECT CONTACT) -->
 <p align="center">
+  <a href="https://arvss07.github.io/Arvss07/" target="_blank" title="Press START: Play Cyber Defender Arcade">
+    <img alt="Button START: Cyber Defender Arcade" src="assets/btn-start.svg" height="42">
+  </a>
+  &nbsp;&nbsp;
   <a href="https://www.linkedin.com/in/arvss07" title="Press A for LinkedIn">
     <img alt="Button A: LinkedIn" src="assets/btn-linkedin.svg" height="42">
   </a>
@@ -59,16 +65,6 @@
   <source media="(prefers-color-scheme: light)" srcset="assets/graph-light.svg">
   <img alt="Page 05: Overworld Radar - 52-Week Commit Activity Terrain Graph." src="assets/graph-dark.svg" width="100%">
 </picture>
-
-
-<!-- BONUS STAGE: PLAYABLE RETRO ARCADE -->
-<a href="https://arvss07.github.io/Arvss07/" target="_blank" title="Press Start: Play Cyber Defender Arcade Mini-Game in browser">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/arcade-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/arcade-light.svg">
-    <img alt="Bonus Stage: Cyber Defender Protocol Invaders Arcade Mini-Game. Click to insert coin and play in browser." src="assets/arcade-dark.svg" width="100%">
-  </picture>
-</a>
 
 <!-- CONTINUE SCREEN -->
 <picture>
